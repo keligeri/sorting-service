@@ -1,7 +1,6 @@
 package com.practice.sortingservice.sorting;
 
 import com.practice.sortingservice.exception.NoSuchKeyException;
-import lombok.Getter;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -21,14 +20,19 @@ public class SortingFacade {
     }
 
     public void sortBy(String key) {
+        validateKey(key);
         items.get(key).sort(Comparator.naturalOrder());
     }
 
     public List<? extends Comparable> getBy(String key) {
-        if (items.containsKey(key)) {
-            return items.get(key);
-        }
+        validateKey(key);
+        return items.get(key);
+    }
 
-        throw new NoSuchKeyException("Cannot find list with key: " + key);
+    private void validateKey(String key) {
+        if (!items.containsKey(key)) {
+            String msg = String.format("Cannot find list with key: %s", key);
+            throw new NoSuchKeyException(msg);
+        }
     }
 }
