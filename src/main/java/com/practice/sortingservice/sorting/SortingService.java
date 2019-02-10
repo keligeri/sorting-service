@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +21,7 @@ public class SortingService {
         SortingFacade sortingFacade = populate(request.getPayload());
         sortKeys.forEach(sortingFacade::sortBy);
 
-        return toPayload(sortingFacade.getItems());
+        return toPayload(sortingFacade);
     }
 
     private SortingFacade populate(RequestPayload payload) {
@@ -34,9 +33,10 @@ public class SortingService {
         return sortingFacade;
     }
 
-    private ResponsePayload toPayload(Map<String, List<? extends Comparable>> items) {
+    private ResponsePayload toPayload(SortingFacade sortingFacade) {
         return new ResponsePayload(
-                items.get(validNames.getFruits()), items.get(validNames.getNumbers()),
-                items.get(validNames.getColors()));
+                sortingFacade.getBy(validNames.getFruits()),
+                sortingFacade.getBy(validNames.getNumbers()),
+                sortingFacade.getBy(validNames.getColors()));
     }
 }
