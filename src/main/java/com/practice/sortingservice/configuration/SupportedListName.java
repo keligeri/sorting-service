@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "sorting.supported.names")
-public class SortingName {
+public class SupportedListName {
 
     private String fruits;
     private String numbers;

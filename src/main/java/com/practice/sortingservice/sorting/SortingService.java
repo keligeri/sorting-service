@@ -1,9 +1,9 @@
 package com.practice.sortingservice.sorting;
 
-import com.practice.sortingservice.configuration.SortingName;
+import com.practice.sortingservice.configuration.SupportedListName;
+import com.practice.sortingservice.dto.Request;
 import com.practice.sortingservice.dto.RequestPayload;
 import com.practice.sortingservice.dto.ResponsePayload;
-import com.practice.sortingservice.dto.Request;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,18 +13,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SortingService {
 
-    private final SortingName validNames;
+    private final SupportedListName validNames;
 
-    public ResponsePayload sortByKey(Request request) {
+    public ResponsePayload sortByKeys(Request request) {
         List<String> sortKeys = request.getSortedKeys();
 
-        SortingFacade sortingFacade = populate(request.getPayload());
+        SortingFacade sortingFacade = populateFacade(request.getPayload());
         sortKeys.forEach(sortingFacade::sortBy);
 
         return toPayload(sortingFacade);
     }
 
-    private SortingFacade populate(RequestPayload payload) {
+    private SortingFacade populateFacade(RequestPayload payload) {
         SortingFacade sortingFacade = new SortingFacade();
         sortingFacade.add(validNames.getFruits(), payload.getFruits());
         sortingFacade.add(validNames.getColors(), payload.getColors());
