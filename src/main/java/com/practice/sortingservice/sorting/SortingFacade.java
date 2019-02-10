@@ -10,7 +10,11 @@ import java.util.Map;
 @Getter
 public class SortingFacade {
 
-    private Map<String, List<? extends Comparable>> items = new HashMap<>();
+    private Map<String, List<? extends Comparable>> items;
+
+    public SortingFacade() {
+        this.items  = new HashMap<>();
+    }
 
     public void add(String key, List<? extends Comparable> item) {
         items.put(key, item);
